@@ -2,14 +2,16 @@ apply plugin: 'scala'
 apply plugin: 'application'
 
 // this type of variable declaration is deprecated and will be removed in gradle >= 3
-localRepo = "$System.env.M2_REPO"
-jsHomedir = "$System.env.JSHOMEDIR"
-gsFolder = localRepo + '/com/gigaspaces/'
-gsScalaLibDir = jsHomedir + '/lib/platform/scala/'
-// 1. The tests in this build script only work with version 9.6.2 and possibly earlier
-// 2. GigaSpaces' Scala support only works in versions 9.6.2 but not 9.7
-// 3. Tests passed using a 9.6.2 build provided to me by jb
-gigaSpacesVersion = '9.6.2-9900-RELEASE'
+project.ext {
+    localRepo = '/Users/jason/.m2/repository' //"$System.env.M2_REPO"
+    jsHomedir = '/Users/jason/gigaspaces' //"$System.env.JSHOMEDIR"
+    gsFolder = java.lang.String.format('%s/com/gigaspaces/', project.ext.localRepo)
+    gsScalaLibDir = java.lang.String.format('%s/lib/platform/scala/', project.ext.jsHomedir)
+            // 1. The tests in this build script only work with version 9.6.2 and possibly earlier
+    // 2. GigaSpaces' Scala support only works in versions 9.6.2 but not 9.7
+    // 3. Tests passed using a 9.6.2 build provided to me by jb
+    gigaSpacesVersion = '9.6.2-9900-RELEASE'
+}
 
 repositories {
     mavenCentral()
@@ -21,16 +23,19 @@ ensureDirectory(jsHomedir)
 ensureDirectory(gsScalaLibDir)
 
 def ensureDirectory(directoryPath) {
-    dir = new File(directoryPath)
-    if (!dir.exists())
-        throw new IllegalStateException(String.format("Directory %s does not exist.", directoryPath))
-    if (!dir.isDirectory())
-        throw new IllegalStateException(String.format("File %s is not a directory.", directoryPath))
+    project.ext.dir = new File(directoryPath)
+    if (!project.ext.dir.exists())
+        throw new IllegalStateException(java.lang.String.format("Directory %s does not exist.", directoryPath))
+    if (!project.ext.dir.isDirectory())
+        throw new IllegalStateException(java.lang.String.format("File %s is not a directory.", directoryPath))
 }
 
 dependencies {
 
-    compile 'org.scala-lang:scala-library:2.10.3'
+    compile 'org.scala-lang:scala-library:2.10.4'
+
+    compile 'commons-cli:commons-cli:1.2'
+    compile 'net.sf.opencsv:opencsv:2.0'
 
     compile files(gsFolder + 'gs-openspaces/' + gigaSpacesVersion + '/gs-openspaces-' + gigaSpacesVersion + '.jar')
     compile files(gsFolder + 'gs-runtime/' + gigaSpacesVersion + '/gs-runtime-' + gigaSpacesVersion + '.jar')
@@ -72,4 +77,4 @@ task test(overwrite: true, dependsOn: testClasses) << {
     }
 }
 
-mainClassName='com.gigaspaces.adminlogger.Main'
+mainClassName='com.gigaspaces.csvwriter.Main'
