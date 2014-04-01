@@ -15,7 +15,6 @@ class DocumentReader(processing: CommandLineProcessing) {
     * @return a SpaceDocument, populated with the next row's worth of data
     */
   def nextDocument(): Option[SpaceDocument] = {
-    val map = scala.collection.mutable.Map[String, AnyRef]()
     val values: Array[String] = reader.readNext()
     if (values != null) {
       val props = new DocumentProperties()
