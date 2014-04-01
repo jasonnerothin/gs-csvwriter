@@ -35,6 +35,7 @@ dependencies {
 
     compile 'commons-cli:commons-cli:1.2'
     compile 'net.sf.opencsv:opencsv:2.0'
+    compile 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
 
     compile files(gsFolder + 'gs-openspaces/' + gigaSpacesVersion + '/gs-openspaces-' + gigaSpacesVersion + '.jar')
     compile files(gsFolder + 'gs-runtime/' + gigaSpacesVersion + '/gs-runtime-' + gigaSpacesVersion + '.jar')
