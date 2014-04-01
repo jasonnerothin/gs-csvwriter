@@ -7,10 +7,9 @@ class DocumentReaderSuite extends FunSuite with BeforeAndAfterAll {
 
   val typeName = "ZipperData"
   val testFile: File = new File(new File(System.getProperty("java.io.tmpdir")), "Foo.csv")
-  //  var testFile: File = new File(new File("/tmp"), "Foo.csv")
   val clp = new CommandLineProcessing(Array[String]("-in", testFile.getAbsolutePath, "-url", "/./mySpace", "-dt", typeName))
 
-  private def testInstance(): DocumentReader = new DocumentReader(clp)
+  private def testInstance(): DocumentReader = new DocumentReader(testFile, typeName)
 
   override def beforeAll(): Unit = {
 

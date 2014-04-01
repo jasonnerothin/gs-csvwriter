@@ -2,11 +2,11 @@ package com.gigaspaces.csvwriter
 
 import au.com.bytecode.opencsv.CSVReader
 import com.gigaspaces.document.{DocumentProperties, SpaceDocument}
-import java.io.FileReader
+import java.io.{File, FileReader}
 
-class DocumentReader(processing: CommandLineProcessing) {
+class DocumentReader(inputFile: File, documentDataType: String) {
 
-  private val reader = new CSVReader(new FileReader(processing.inputFile()))
+  private val reader = new CSVReader(new FileReader(inputFile))
   private val columnNames: Array[String] = reader.readNext() // readFirst is really what it is...
 
   /** Takes the next line in the CSV file and turns it into a [SpaceDocument], keys from the
@@ -19,7 +19,7 @@ class DocumentReader(processing: CommandLineProcessing) {
       val props = new DocumentProperties()
       for (idx <- 0 to columnNames.length - 1)
         props.put(columnNames(idx), values(idx))
-      Some(new SpaceDocument(processing.documentDataType(), props))
+      Some(new SpaceDocument(documentDataType, props))
     }
     else None
   }

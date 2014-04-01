@@ -1,13 +1,12 @@
-import com.gigaspaces.csvwriter.CommandLineProcessing
+import com.gigaspaces.csvwriter.{TempFileCreation, CommandLineProcessing}
 import java.io.{FileWriter, File}
 import org.openspaces.core.space.CannotCreateSpaceException
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 import scala.util.Random
 
-class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
+class CommandLineProcessingSuite extends FunSuite with TempFileCreation with BeforeAndAfterEach {
 
-  val tempDir: File = new File("/tmp")
-  val aDirectoryPath: File = tempDir
+  val aDirectoryPath: File = tempDir()
 
   var notAFile: File = null
   var aFile: File = null
@@ -33,7 +32,7 @@ class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
   }
 
   private def newRandFile(fileNameLen: Int): File = {
-    def randFile = new File(tempDir, randString(fileNameLen))
+    def randFile = new File(tempDir(), randString(fileNameLen))
     val aFile = randFile
     //    println(String.format("Creating file: %s", aFile.getAbsolutePath))
     aFile.createNewFile
@@ -46,16 +45,6 @@ class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
     writer.write("foo")
     writer.write("\n")
     writer.close()
-  }
-
-  private def randChar(): Character = {
-    (rand.nextInt(26) + 65).toChar
-  }
-
-  private def randString(len: Int): String = {
-    val builder = new StringBuilder
-    for (i <- 0 to len) builder.append(randChar())
-    builder.toString()
   }
 
   test("inputFile -in aFilePath returns a file reference") {
