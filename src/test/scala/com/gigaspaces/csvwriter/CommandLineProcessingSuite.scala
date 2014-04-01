@@ -17,7 +17,7 @@ class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
   val mtUrl = ""
   var garbageUrl: String = ""
 
-  def testInstance(in: String, url: String) = new CommandLineProcessing(Array("-in", in, "-url", url))
+  def testInstance(in: String, url: String, dt: String) = new CommandLineProcessing(Array("-in", in, "-url", url, "-dt", dt))
 
   override def beforeEach(): Unit = {
     aFile = newRandFile(8)
@@ -59,13 +59,13 @@ class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
   }
 
   test("inputFile -in aFilePath returns a file reference") {
-    val actual = testInstance(in = aFile.getAbsolutePath, url = randString(4)).inputFile()
+    val actual = testInstance(in = aFile.getAbsolutePath, url = randString(4), dt = randString(3)).inputFile()
     assert(actual.isFile)
   }
 
   test("inputFile -in notAFilePath throws") {
     try {
-      testInstance(in = notAFile.getAbsolutePath, url = randString(4)).inputFile()
+      testInstance(in = notAFile.getAbsolutePath, url = randString(4), dt = randString(3)).inputFile()
     } catch {
       case e: IllegalArgumentException =>
       case e: Throwable => fail("Expected IllegalArgumentException instead.", e)
@@ -75,7 +75,7 @@ class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
 
   test("inputFile -in aDirectoryPath throws") {
     try {
-      testInstance(in = aDirectoryPath.getAbsolutePath, url = randString(4)).inputFile()
+      testInstance(in = aDirectoryPath.getAbsolutePath, url = randString(4), dt = randString(3)).inputFile()
     } catch {
       case e: IllegalArgumentException =>
       case e: Throwable => fail("Expected IllegalArgumentException instead.", e)
@@ -84,7 +84,7 @@ class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
 
   test("gigaSpace -url mtUrl throws") {
     try {
-      val actual = testInstance(url = mtUrl, in = randString(4))
+      val actual = testInstance(url = mtUrl, in = randString(4), dt = randString(3))
       actual.gigaSpace()
     } catch {
       case e: IllegalArgumentException =>
@@ -94,12 +94,25 @@ class CommandLineProcessingSuite extends FunSuite with BeforeAndAfterEach {
 
   test("gigaSpace -url garbageUrl throws") {
     try {
-      val actual = testInstance(url = randString(4), in = aFile.getAbsolutePath)
+      val actual = testInstance(url = randString(4), in = aFile.getAbsolutePath, dt = randString(3))
       actual.gigaSpace()
     } catch {
       case e: CannotCreateSpaceException =>
       case e: Throwable => fail("Expected CannotCreateSpaceException instead.", e)
     }
+  }
+
+  test("documentDataType -dt, when empty, throws"){
+    try{
+      testInstance(url = randString(4), in = aFile.getAbsolutePath, dt = "").documentDataType()
+    } catch{
+      case e: IllegalArgumentException =>
+      case e: Throwable => fail("Expected IllegalArgumentException instead", e)
+    }
+  }
+
+  test("documentDataType -dt something, returns something"){
+    assert( testInstance(url=randString(3), in = aFile.getAbsolutePath, dt = "something").documentDataType() === "something" )
   }
 
 }
