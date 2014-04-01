@@ -1,28 +1,20 @@
 package com.gigaspaces.csvwriter
 
-import org.scalatest.{BeforeAndAfterEach, FunSuite}
+import org.scalatest.FunSuite
 import scala.util.Random
 import java.io.File
 
-class TempFileCreationSuite extends FunSuite with TempFileCreation with BeforeAndAfterEach{
+class TempFileCreationSuite extends FunSuite with TempFileCreation{
 
   val rand = new Random(System.currentTimeMillis())
   val javaIoTmpDir = new File(System.getProperty("java.io.tmpdir"))
   val tmpDir = new File("/tmp")
 
-  override def beforeEach(): Unit = {
-
-  }
-
-  override def afterEach() : Unit = {
-
-  }
-
   test("newRandFile has correct filename length"){
 
     val len = rand.nextInt(4) + 1
 
-    val result = newRandFile(len)
+    val result = newRandFile(len, deleteLater = true)
 
     assert(result.getName.length === len )
 
@@ -35,7 +27,7 @@ class TempFileCreationSuite extends FunSuite with TempFileCreation with BeforeAn
     val jitd = javaIoTmpDir
     val td = tmpDir
 
-    val result = newRandFile(rand.nextInt(4)+1)
+    val result = newRandFile(rand.nextInt(4)+1, deleteLater = true)
     val parent = result.getParentFile
 
     assert( parent == td || parent == jitd, unexpectedTempDir)
