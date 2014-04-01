@@ -3,7 +3,6 @@ package com.gigaspaces.csvwriter
 import au.com.bytecode.opencsv.CSVReader
 import com.gigaspaces.document.{DocumentProperties, SpaceDocument}
 import java.io.FileReader
-import scala.collection.convert.Wrappers.{MutableMapWrapper}
 
 class DocumentReader(processing: CommandLineProcessing) {
 
