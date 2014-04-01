@@ -1,7 +1,6 @@
 apply plugin: 'scala'
 apply plugin: 'application'
 
-// this type of variable declaration is deprecated and will be removed in gradle >= 3
 project.ext {
     localRepo = '/Users/jason/.m2/repository' //"$System.env.M2_REPO"
     jsHomedir = '/Users/jason/gigaspaces' //"$System.env.JSHOMEDIR"
