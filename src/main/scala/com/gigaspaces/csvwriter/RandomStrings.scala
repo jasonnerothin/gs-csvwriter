@@ -12,7 +12,7 @@ trait RandomStrings {
 
   def randString(len: Int): String = {
     val builder = new StringBuilder
-    for (i <- 0 to len) builder.append(randChar())
+    for (i <- 1 to len ) builder.append(randChar())
     builder.toString()
   }
 
