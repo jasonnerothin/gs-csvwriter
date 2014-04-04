@@ -33,9 +33,18 @@ dependencies {
 
     compile 'org.scala-lang:scala-library:2.10.3'
 
+    // APP LIBS
+
     compile 'commons-cli:commons-cli:1.2'
     compile 'net.sf.opencsv:opencsv:2.0'
     compile 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
+
+    // LOGGING
+
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    testCompile 'ch.qos.logback:logback-classic:1.0.13'
+
+    // GS LIBS
 
     compile files(gsFolder + 'gs-openspaces/' + gigaSpacesVersion + '/gs-openspaces-' + gigaSpacesVersion + '.jar')
     compile files(gsFolder + 'gs-runtime/' + gigaSpacesVersion + '/gs-runtime-' + gigaSpacesVersion + '.jar')
