@@ -57,7 +57,7 @@ trait EncodingDetection {
       Charset.forName(enc)
     } catch {
       case u: UnsupportedCharsetException => throw new IllegalStateException(
-        String.format("Provided csv file [{}] uses an unsupported character set [{}] and cannot be processed.", in.getAbsolutePath, enc)
+        String.format("Provided csv file [%s] uses an unsupported character set [%s] and cannot be processed.", in.getAbsolutePath, enc)
       )
     }
   }
