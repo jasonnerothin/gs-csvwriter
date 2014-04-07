@@ -6,8 +6,11 @@ import scala.Predef.String
 import scala.Predef.require
 import org.openspaces.core.space.UrlSpaceConfigurer
 import org.openspaces.core.{GigaSpace, GigaSpaceConfigurer}
+import org.slf4j.LoggerFactory
 
 class CommandLineProcessing(args: Array[String]) {
+
+  private val logger = LoggerFactory.getLogger(getClass)
 
   private val inputFileOption = "in"
   private val inputFileDescription = "csv file"
@@ -28,6 +31,9 @@ class CommandLineProcessing(args: Array[String]) {
     val f = new File(p)
     require(!f.isDirectory, String.format("Input %s must not be a directory, but [%s] is one.", inputFileDescription, p))
     require(f.isFile, String.format("Input %s must exist, but [%s] does not.", inputFileDescription, p))
+    val path = f.getAbsolutePath
+    require(f.canRead, String.format("Input file [ %s ] is not readable.", path))
+    logger.debug("Valid input file specified in params: [ {} ]", path)
     f
   }
 
@@ -58,11 +64,11 @@ class CommandLineProcessing(args: Array[String]) {
 
   private def documentDataTypeString = stringValFromOpt(documentDataTypeName)
 
-  def documentDataType() : String = {
+  def documentDataType(): String = {
 
     val dataType = documentDataTypeString
-    require( dataType != null, options.toString )
-    require( dataType.length > 0, options.toString )
+    require(dataType != null, options.toString)
+    require(dataType.length > 0, options.toString)
 
     dataType
   }

@@ -21,7 +21,10 @@ class DocumentReader(inputFile: File, documentDataType: String) {
         props.put(columnNames(idx), values(idx))
       Some(new SpaceDocument(documentDataType, props))
     }
-    else None
+    else {
+      reader.close()
+      None
+    }
   }
 
 }
