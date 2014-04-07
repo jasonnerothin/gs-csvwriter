@@ -4,8 +4,11 @@ import com.gigaspaces.document.SpaceDocument
 import scala.annotation.tailrec
 import scala.collection.parallel.ParSeq
 import scala.collection.parallel.mutable.ParArray
+import org.slf4j.LoggerFactory
 
 class SpaceDocumentCollector(reader: DocumentReader) {
+
+  val logger = LoggerFactory.getLogger(getClass)
 
   /**
    * Generate [[SpaceDocument]]s from the documentReader
