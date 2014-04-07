@@ -68,4 +68,32 @@ class SpaceDocumentCollectorSuite extends FunSuite with BeforeAndAfterEach with 
 
   }
 
+  test("space documents are contained in the resultant array") {
+
+    val duckType = "duck"
+    val gooseType = "goose"
+
+    val type0 = duckType
+    val mockDoc0 = mock[SpaceDocument]
+    val type1 = gooseType
+    val mockDoc1 = mock[SpaceDocument]
+    val type2 = duckType
+    val mockDoc2 = mock[SpaceDocument]
+    when(mockDoc0.getTypeName).thenReturn(type0)
+    when(mockDoc1.getTypeName).thenReturn(type1)
+    when(mockDoc2.getTypeName).thenReturn(type2)
+
+    when(reader.nextDocument())
+      .thenReturn(Some(mockDoc0))
+      .thenReturn(Some(mockDoc1))
+      .thenReturn(Some(mockDoc2))
+      .thenReturn(None)
+
+    val result = collector.collect(new ParArray[SpaceDocument](0))
+
+    assert(result.filter(x => x.getTypeName == duckType).size === 2)
+    assert(result.filter(x => x.getTypeName == gooseType).size === 1)
+
+  }
+
 }
