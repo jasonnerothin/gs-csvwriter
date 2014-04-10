@@ -3,13 +3,14 @@ package com.gigaspaces.csvwriter
 import scala.io.{BufferedSource, Source, Codec}
 import java.io.{BufferedWriter, FileWriter, File}
 
-class EncodedCopying(processing: CommandLineProcessing, creation: TempFileCreation) {
+class EncodedCopying(processing: CommandLineProcessing, creation: TempFileCreation, deleteTempFile:Boolean = true) {
 
   implicit val codec = Codec("UTF-8")
-  val tempFileNameLength = 12
-  val deleteTempFile = false
+  val tempFileNameLength:Int = 12
 
-  def encodedTempFile: File = {
+  /** @return a temporary file that is a copy of [[CommandLineProcessing.inputFile()]]
+    */
+  def encodedTempFile(): File = {
 
     def errorMsg(action: String, path: String): String = {
       String.format("Need to be able to %s temp file [ %s ].", action, path)
