@@ -7,3 +7,5 @@ trait AppSettings{
   def threadPoolSize : Int = 1
 
 }
+
+object AppSettings extends AppSettings {}
