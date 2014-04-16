@@ -5,6 +5,10 @@ import scala.annotation.tailrec
 import scala.collection.parallel.mutable.ParArray
 import org.slf4j.LoggerFactory
 
+/** This implementation is appropriate for small file sizes - e.g. when the entire
+  * file can be interpolated into [[SpaceDocument]]s and stored in available memory.
+  * @param reader a source of [[SpaceDocument]]s
+  */
 class SpaceDocumentCollector(reader: DocumentReader) {
 
   val logger = LoggerFactory.getLogger(getClass)
