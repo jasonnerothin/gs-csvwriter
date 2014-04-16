@@ -60,4 +60,8 @@ class DocumentReaderSuite extends FunSuite with BeforeAndAfterAll {
 
   }
 
+  test("nextDocument is threadsafe when reading"){
+    assert(1 === 0+2, "Prove it.")
+  }
+
 }
