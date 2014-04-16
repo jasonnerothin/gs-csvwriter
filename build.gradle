@@ -4,8 +4,8 @@ apply plugin: 'application'
 project.ext {
     localRepo = '/Users/jason/.m2/repository' //"$System.env.M2_REPO"
     jsHomedir = '/Users/jason/gigaspaces' //"$System.env.JSHOMEDIR"
-    gsFolder = java.lang.String.format('%s/com/gigaspaces/', project.ext.localRepo)
-    gsScalaLibDir = java.lang.String.format('%s/lib/platform/scala/', project.ext.jsHomedir)
+    gsFolder = String.format('%s/com/gigaspaces/', project.ext.localRepo)
+    gsScalaLibDir = String.format('%s/lib/platform/scala/', project.ext.jsHomedir)
     // 1. The tests in this build script only work with version 9.6.2 and possibly earlier
     // 2. GigaSpaces' Scala support only works in versions 9.6.2 but not 9.7
     // 3. Tests passed using a 9.6.2 build provided to me by jb
@@ -38,7 +38,7 @@ dependencies {
     compile 'commons-cli:commons-cli:1.2'
     compile 'net.sf.opencsv:opencsv:2.0'
     compile 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
-    compile 'com.typesafe.akka:akka-actor_2.10:2.3.1'
+    compile 'com.typesafe.akka:akka-actor_2.10:2.3.2'
 //    compile 'org.springframework:scala:spring-scala_2.10' http://repo.spring.io/webapp/browserepo.html?2
 
     // LOGGING
